@@ -15,6 +15,8 @@ DEFAULT_WINDOW = getattr(settings, 'PAGINATION_DEFAULT_WINDOW', 4)
 DEFAULT_ORPHANS = getattr(settings, 'PAGINATION_DEFAULT_ORPHANS', 0)
 INVALID_PAGE_RAISES_404 = getattr(settings,
     'PAGINATION_INVALID_PAGE_RAISES_404', False)
+TEMPLATE_NAME = getattr(settings, 
+    'PAGINATION_TEMPLATE', 'pagination/pagination.html')
 
 def do_autopaginate(parser, token):
     """
@@ -225,6 +227,6 @@ def paginate(context, window=DEFAULT_WINDOW, hashtag=''):
     except KeyError, AttributeError:
         return {}
 
-register.inclusion_tag('pagination/pagination.html', takes_context=True)(
+register.inclusion_tag(TEMPLATE_NAME, takes_context=True)(
     paginate)
 register.tag('autopaginate', do_autopaginate)
